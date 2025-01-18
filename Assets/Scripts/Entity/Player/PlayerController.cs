@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speedForce;
-    public float jumpForce;
+    public static PlayerController instance;
+
+    public EntityStatistics _statistics;
     public float height;
     public LayerMask whatIsGround;
     [SerializeField] private bool grounded;
@@ -13,11 +14,26 @@ public class PlayerController : MonoBehaviour
     private Vector2 movement;
     public List<bool> additionalJumps = new();
 
-    [SerializeField] private Rigidbody2D rgBody;
+    public Rigidbody2D rgBody;
+    public EntityAnimation _animation;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Update()
     {
-        grounded = Physics2D.Raycast(transform.position + new Vector3(0.45f, 0), Vector3.down, height, whatIsGround) || Physics2D.Raycast(transform.position + new Vector3(-0.45f, 0), Vector3.down, height, whatIsGround);
+        grounded = Physics2D.Raycast(transform.position + new Vector3(0.3f, 0), Vector3.down, height, whatIsGround) || Physics2D.Raycast(transform.position + new Vector3(-0.3f, 0), Vector3.down, height, whatIsGround);
+
+        if (grounded)
+        {
+            if (movement.magnitude > 0.01f)
+                _animation.ChangeTexure(1);
+            else
+                _animation.ChangeTexure(0);
+        } else
+            _animation.ChangeTexure(2);
     }
 
     private void FixedUpdate()
@@ -27,7 +43,7 @@ public class PlayerController : MonoBehaviour
         Vector3 rotatedMovement = transform.TransformDirection(move);
 
         //Move player
-        rgBody.AddForce(rotatedMovement * speedForce);
+        rgBody.AddForce(rotatedMovement * _statistics.speed);
         rgBody.velocity = new(Mathf.Clamp(rgBody.velocity.x, -2, 2), rgBody.velocity.y);
     }
 
@@ -67,7 +83,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         rgBody.velocity = new Vector3(rgBody.velocity.x, 0f);
-        rgBody.AddForce(transform.up * jumpForce);
+        rgBody.AddForce(transform.up * _statistics.jump);
     }
 
     private bool CheckIfCanJump()
