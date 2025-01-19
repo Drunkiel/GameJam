@@ -73,4 +73,13 @@ public class EnemyController : MonoBehaviour
         rgBody.AddForce(rotatedMovement * _statistics.speed);
         rgBody.velocity = new(Mathf.Clamp(rgBody.velocity.x, -2, 2), rgBody.velocity.y);
     }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
+            _statistics.TakeDamage(PlayerController.instance._statistics.damage);
+            PlayerController.instance.Jump(1.15f);
+        }
+    }
 }

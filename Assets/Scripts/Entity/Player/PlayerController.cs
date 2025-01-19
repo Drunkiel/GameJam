@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
+    public bool isStopped;
 
     public EntityStatistics _statistics;
     public float height;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rgBody;
     public EntityAnimation _animation;
+    public EatingController _controller;
 
     private void Awake()
     {
@@ -25,6 +27,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         grounded = Physics2D.Raycast(transform.position + new Vector3(0.3f, 0), Vector3.down, height, whatIsGround) || Physics2D.Raycast(transform.position + new Vector3(-0.3f, 0), Vector3.down, height, whatIsGround);
+
+        if (isStopped)
+            return;
 
         if (grounded)
         {
@@ -39,7 +44,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         //Make movement depend on direction player is facing
-        Vector3 move = (Vector3)movement.normalized;
+        Vector3 move = isStopped ? Vector3.zero : (Vector3)movement.normalized;
         Vector3 rotatedMovement = transform.TransformDirection(move);
 
         //Move player
@@ -80,10 +85,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Jump()
+    public void EatingInput(InputAction.CallbackContext context)
     {
+        if (context.performed)
+        {
+            if (grounded && GetComponent<TriggerController>().isTriggered)
+            {
+                StartCoroutine(_controller.Eat());
+            }
+        }
+    }
+
+    public void Jump(float multiplier = 1f)
+    {
+        if (isStopped)
+            return;
+
         rgBody.velocity = new Vector3(rgBody.velocity.x, 0f);
-        rgBody.AddForce(transform.up * _statistics.jump);
+        rgBody.AddForce(transform.up * (_statistics.jump * multiplier));
     }
 
     private bool CheckIfCanJump()
