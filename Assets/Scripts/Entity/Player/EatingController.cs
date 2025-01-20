@@ -11,13 +11,16 @@ public class EatingController : MonoBehaviour
     public CorpsController _corps;
     public PlayerController _player;
 
-    private void GivePoint()
+    private void GivePoint(int points)
     {
-        foodPoints += 1;
+        upgradePoints += Mathf.FloorToInt(_corps._statistics.pointsUsed * 0.8f);
+        foodPoints += points;
         if (foodPoints >= 5)
         {
-            foodPoints -= 5;
-            upgradePoints += 1;
+            int multiplication = foodPoints / 5;
+
+            foodPoints -= 5 * multiplication;
+            upgradePoints += multiplication;
         }
     }
 
@@ -38,13 +41,13 @@ public class EatingController : MonoBehaviour
         eatingSlider.maxValue = _corps._statistics.maxHealth;
         _player._animation.ChangeTexure(4);
 
-        for (int i = 0; i < eatingSlider.maxValue; i++)
+        while (eatingSlider.value < eatingSlider.maxValue)
         {
             yield return new WaitForSeconds(1f);
-            eatingSlider.value += 1;
-            GivePoint();
+            eatingSlider.value += _player._statistics.damage;
         }
 
+        GivePoint(_corps._statistics.maxHealth);
         _player.isStopped = false;
         eatingSlider.gameObject.SetActive(false);
         Destroy(_corps.gameObject);

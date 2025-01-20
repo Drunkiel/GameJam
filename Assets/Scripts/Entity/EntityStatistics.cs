@@ -1,14 +1,21 @@
+using UnityEngine;
+
 [System.Serializable]
 public class EntityStatistics 
 {
-    public int health;
+    public float health;
     public int maxHealth;
-    public int damage;
+    public float damage;
     public float speed;
     public float jump;
 
-    public void TakeDamage(int damage)
+    public int pointsUsed;
+
+    public void TakeDamage(float damage, Transform transform, Sprite sprite)
     {
         health -= damage;
+
+        if (health <= 0 )
+            GameController.instance.SpawnCorpses(transform, this, sprite);
     }
 }

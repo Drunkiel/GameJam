@@ -90,9 +90,7 @@ public class PlayerController : MonoBehaviour
         if (context.performed)
         {
             if (grounded && GetComponent<TriggerController>().isTriggered)
-            {
                 StartCoroutine(_controller.Eat());
-            }
         }
     }
 

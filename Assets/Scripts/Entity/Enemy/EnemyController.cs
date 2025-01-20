@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 public enum State
 {
@@ -27,7 +26,6 @@ public class EnemyController : MonoBehaviour
     public float height;
     public LayerMask whatIsGround;
     public bool grounded;
-    private bool isFlipped;
     public Rigidbody2D rgBody;
     public EnemyMovement _movement;
     public EntityAnimation _animation;
@@ -78,7 +76,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            _statistics.TakeDamage(PlayerController.instance._statistics.damage);
+            _statistics.TakeDamage(PlayerController.instance._statistics.damage, transform, _animation.sprites[3]);
             PlayerController.instance.Jump(1.15f);
         }
     }
