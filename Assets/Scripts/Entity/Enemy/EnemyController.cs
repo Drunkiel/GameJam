@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
         Vector3 rotatedMovement = transform.TransformDirection(move);
 
         //Move player
-        rgBody.AddForce(rotatedMovement * _statistics.speed);
+        rgBody.AddForce(rotatedMovement * _statistics.speed * 10);
         rgBody.velocity = new(Mathf.Clamp(rgBody.velocity.x, -2, 2), rgBody.velocity.y);
     }
 

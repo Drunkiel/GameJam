@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         Vector3 rotatedMovement = transform.TransformDirection(move);
 
         //Move player
-        rgBody.AddForce(rotatedMovement * _statistics.speed);
+        rgBody.AddForce(rotatedMovement * _statistics.speed * 10);
         rgBody.velocity = new(Mathf.Clamp(rgBody.velocity.x, -2, 2), rgBody.velocity.y);
     }
 
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         rgBody.velocity = new Vector3(rgBody.velocity.x, 0f);
-        rgBody.AddForce(transform.up * (_statistics.jump * multiplier));
+        rgBody.AddForce(transform.up * (_statistics.jump * 10 * multiplier));
     }
 
     private bool CheckIfCanJump()

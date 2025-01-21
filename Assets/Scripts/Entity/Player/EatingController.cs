@@ -21,6 +21,7 @@ public class EatingController : MonoBehaviour
 
             foodPoints -= 5 * multiplication;
             upgradePoints += multiplication;
+            UpgradeController.instance._upgradeUI.UpdateTexts();
         }
     }
 

@@ -153,6 +153,6 @@ public class EnemyMovement : MonoBehaviour
     private void Jump()
     {
         _controller.rgBody.velocity = new Vector3(_controller.rgBody.velocity.x, 0f);
-        _controller.rgBody.AddForce(transform.up * _controller._statistics.jump);
+        _controller.rgBody.AddForce(transform.up * _controller._statistics.jump * 10);
     }
 }
