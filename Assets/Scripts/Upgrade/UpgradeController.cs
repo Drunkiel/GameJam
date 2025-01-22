@@ -32,26 +32,29 @@ public class UpgradeController : MonoBehaviour
         switch (index)
         {
             case 0:
-                _statistics.maxHealth += healthMultiplier;
+                _statistics.maxHealth = _statistics.maxHealth += healthMultiplier;
                 break;
 
             case 1:
-                Mathf.Floor(_statistics.damage += damageMultiplier);
+                _statistics.damage = Mathf.Round((_statistics.damage + damageMultiplier) * 10) / 10;
                 break;
 
             case 2:
-                Mathf.Floor(_statistics.speed += speedMultiplier);
+                _statistics.speed = Mathf.Round((_statistics.speed + speedMultiplier) * 10) / 10;
                 break;
 
             case 3:
-                Mathf.Floor(_statistics.jump += jumpMultiplier);
+                _statistics.jump = Mathf.Round((_statistics.jump + jumpMultiplier) * 10) / 10;
                 break;
         }
 
         _statistics.pointsUsed += 1;
         _eatingController.upgradePoints -= 1;
         if (_eatingController.upgradePoints <= 0)
+        {
             _upgradeUI.parent.SetActive(false);
+            GameController.isPaused = false;
+        }
         else
             _upgradeUI.UpdateTexts();
     }

@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         grounded = Physics2D.Raycast(transform.position + new Vector3(0.3f, 0), Vector3.down, height, whatIsGround) || Physics2D.Raycast(transform.position + new Vector3(-0.3f, 0), Vector3.down, height, whatIsGround);
 
-        if (isStopped)
+        if (isStopped || GameController.isPaused)
             return;
 
         if (grounded)
@@ -44,11 +44,11 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         //Make movement depend on direction player is facing
-        Vector3 move = isStopped ? Vector3.zero : (Vector3)movement.normalized;
+        Vector3 move = isStopped || GameController.isPaused ? Vector3.zero : (Vector3)movement.normalized;
         Vector3 rotatedMovement = transform.TransformDirection(move);
 
         //Move player
-        rgBody.AddForce(rotatedMovement * _statistics.speed * 10);
+        rgBody.AddForce(_statistics.speed * 10 * rotatedMovement);
         rgBody.velocity = new(Mathf.Clamp(rgBody.velocity.x, -2, 2), rgBody.velocity.y);
     }
 
@@ -60,11 +60,13 @@ public class PlayerController : MonoBehaviour
         if (inputValue.x < 0 && !isFlipped)
         {
             transform.GetChild(0).localScale = new(-1, 1, 1);
+            _animation.light.transform.localScale = new(-1, 1, 1);
             isFlipped = true;
         }
         else if (inputValue.x > 0 && isFlipped)
         {
             transform.GetChild(0).localScale = new(1, 1, 1);
+            _animation.light.transform.localScale = new(1, 1, 1);
             isFlipped = false;
         }
 
@@ -96,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(float multiplier = 1f)
     {
-        if (isStopped)
+        if (isStopped || GameController.isPaused)
             return;
 
         rgBody.velocity = new Vector3(rgBody.velocity.x, 0f);

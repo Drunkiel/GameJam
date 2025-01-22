@@ -29,6 +29,9 @@ public class EnemyMovement : MonoBehaviour
     {
         isMoving = _controller.rgBody.velocity.magnitude > 0.01f;
 
+        if (GameController.isPaused)
+            return;
+
         if (!isMoving && move.magnitude >= 1f && _controller.grounded)
             Jump();
     }
@@ -41,7 +44,10 @@ public class EnemyMovement : MonoBehaviour
             Destroy(gameObject);
         };
 
-        move = new Vector3(movement.x, 0, movement.y).normalized;
+        if (GameController.isPaused)
+            move = Vector3.zero;
+        else
+            move = new Vector3(movement.x, 0, movement.y).normalized;
     }
 
     public void Patrolling()
@@ -130,11 +136,13 @@ public class EnemyMovement : MonoBehaviour
         if (newFaceDirection < 0 && !isFlipped)
         {
             transform.GetChild(0).localScale = new(-1, 1, 1);
+            _controller._animation.light.transform.localScale = new(-1, 1, 1);
             isFlipped = true;
         }
         else if (newFaceDirection > 0 && isFlipped)
         {
             transform.GetChild(0).localScale = new(1, 1, 1);
+            _controller._animation.light.transform.localScale = new(1, 1, 1);
             isFlipped = false;
         }
     }
@@ -153,6 +161,6 @@ public class EnemyMovement : MonoBehaviour
     private void Jump()
     {
         _controller.rgBody.velocity = new Vector3(_controller.rgBody.velocity.x, 0f);
-        _controller.rgBody.AddForce(transform.up * _controller._statistics.jump * 10);
+        _controller.rgBody.AddForce(_controller._statistics.jump * 10 * transform.up);
     }
 }

@@ -34,6 +34,9 @@ public class EnemyController : MonoBehaviour
     {
         grounded = Physics2D.Raycast(transform.position + new Vector3(0.3f, 0), Vector3.down, height, whatIsGround) || Physics2D.Raycast(transform.position + new Vector3(-0.3f, 0), Vector3.down, height, whatIsGround);
 
+        if (GameController.isPaused)
+            return;
+
         //Movement
         switch (currentState)
         {
@@ -67,8 +70,11 @@ public class EnemyController : MonoBehaviour
         Vector3 move = (Vector3)_movement.movement.normalized;
         Vector3 rotatedMovement = transform.TransformDirection(move);
 
+        if (GameController.isPaused)
+            return;
+
         //Move player
-        rgBody.AddForce(rotatedMovement * _statistics.speed * 10);
+        rgBody.AddForce(_statistics.speed * 10 * rotatedMovement);
         rgBody.velocity = new(Mathf.Clamp(rgBody.velocity.x, -2, 2), rgBody.velocity.y);
     }
 

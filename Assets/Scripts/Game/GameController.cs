@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
+    public static bool isPaused;
 
     public GameObject corpsPrefab;
 
