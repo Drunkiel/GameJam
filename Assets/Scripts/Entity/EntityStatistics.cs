@@ -11,11 +11,11 @@ public class EntityStatistics
 
     public int pointsUsed;
 
-    public void TakeDamage(float damage, Transform transform, Sprite sprite)
+    public void TakeDamage(float damage, Transform transform, Sprite sprite, bool player = false)
     {
         health -= damage;
 
-        if (health <= 0 )
-            GameController.instance.SpawnCorpses(transform, this, sprite);
+        if (health <= 0)
+            GameController.instance.SpawnCorpses(transform, this, sprite, player);
     }
 }

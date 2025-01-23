@@ -38,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (transform.position.y < -10f)
+        if (transform.position.y < -100f)
         {
             print($"Enemy fall off the map {transform.name} on position: {transform.position}");
             Destroy(gameObject);
@@ -69,7 +69,7 @@ public class EnemyMovement : MonoBehaviour
 
     //Make it to be depended by skill
     private const float AllowedDistance = 1.0f;
-    private const float TooCloseDistance = 0.5f;
+    private const float TooCloseDistance = 5f;
 
     public void ApproachPlayer()
     {

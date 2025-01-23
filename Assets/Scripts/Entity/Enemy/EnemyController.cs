@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -84,6 +85,24 @@ public class EnemyController : MonoBehaviour
         {
             _statistics.TakeDamage(PlayerController.instance._statistics.damage, transform, _animation.sprites[3]);
             PlayerController.instance.Jump(1.15f);
+        }
+    }
+
+    public void ChangeState(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                currentState = State.Standing;
+                break;
+
+            case 1:
+                currentState = State.Patroling;
+                break;
+
+            case 2:
+                currentState = State.Attacking;
+                break;
         }
     }
 }

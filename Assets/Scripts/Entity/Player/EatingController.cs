@@ -33,7 +33,7 @@ public class EatingController : MonoBehaviour
 
     public IEnumerator Eat()
     {
-        if (_player.isStopped)
+        if (_player.isStopped || _corps == null)
             yield break;
 
         _player.isStopped = true;

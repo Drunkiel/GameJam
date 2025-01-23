@@ -12,12 +12,18 @@ public class GameController : MonoBehaviour
         instance = this;
     }
 
-    public void SpawnCorpses(Transform transform, EntityStatistics _statistics, Sprite sprite)
+    public void SpawnCorpses(Transform transform, EntityStatistics _statistics, Sprite sprite, bool player = false)
     {
         CorpsController _controller = Instantiate(corpsPrefab, transform.position, Quaternion.identity).GetComponent<CorpsController>();
         _controller._statistics = _statistics;
         _controller.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = sprite;
         _controller.transform.localScale = transform.GetChild(0).localScale;
-        Destroy(transform.gameObject);
+        if (!player)
+            Destroy(transform.gameObject);
+        else
+        {
+            PlayerController.instance.ResetStats();
+            PlayerController.instance.transform.position = new(-13, -2, 0);
+        }
     }
 }

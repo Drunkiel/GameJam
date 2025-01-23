@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public bool isStopped;
 
     public EntityStatistics _statistics;
+    private EntityStatistics _statisticsStart;
     public float height;
     public LayerMask whatIsGround;
     [SerializeField] private bool grounded;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        _statisticsStart = _statistics;
     }
 
     private void Update()
@@ -129,5 +131,10 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < additionalJumps.Count; i++)
             additionalJumps[i] = false;
+    }
+
+    public void ResetStats()
+    {
+        _statistics = _statisticsStart;
     }
 }
