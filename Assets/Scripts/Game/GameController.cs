@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
         else
         {
             PlayerController.instance.ResetStats();
-            PlayerController.instance.transform.position = new(-13, -2, 0);
+            PlayerController.instance.transform.position = new(-16, -2, 0);
         }
     }
 }
