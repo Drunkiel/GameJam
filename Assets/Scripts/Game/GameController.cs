@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
         {
             PlayerController.instance.ResetStats();
             PlayerController.instance.transform.position = new(-16, -2, 0);
+            DialogController.instance.ChangeText();
         }
     }
 }
