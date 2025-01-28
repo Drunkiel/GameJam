@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (!IsTargetVisible(PlayerController.instance.gameObject))
+        if (!IsTargetVisible(PlayerController.instance.gameObject) && !GameController.isPaused)
             AdjustCameraToPlayer();
     }
 

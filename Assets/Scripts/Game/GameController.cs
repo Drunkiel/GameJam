@@ -3,13 +3,20 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
-    public static bool isPaused;
+    public static bool isPaused = true;
 
     public GameObject corpsPrefab;
+    public GameObject UI;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    public void StartGame()
+    {
+        UI.SetActive(false);
+        isPaused = false;
     }
 
     public void SpawnCorpses(Transform transform, EntityStatistics _statistics, Sprite sprite, bool player = false)
