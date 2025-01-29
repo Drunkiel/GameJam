@@ -29,7 +29,6 @@ public class GameController : MonoBehaviour
             Destroy(transform.gameObject);
         else
         {
-            PlayerController.instance.ResetStats();
             PlayerController.instance.transform.position = new(-16, -2, 0);
             DialogController.instance.ChangeText();
         }

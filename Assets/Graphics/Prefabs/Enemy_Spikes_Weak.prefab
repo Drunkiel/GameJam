@@ -451,7 +451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1610340520676356051, guid: e1bfe8c277ccc364c89fe7e4fdff88e4, type: 3}
   strength: 250
-  cooldown: 8
+  cooldown: 16
   onCooldown: 0
 --- !u!114 &7227953508560995373
 MonoBehaviour:

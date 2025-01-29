@@ -13,9 +13,9 @@ public class UpgradeController : MonoBehaviour
     public static UpgradeController instance;
 
     public int healthMultiplier = 1;
-    public float damageMultiplier = 0.5f;
-    public float speedMultiplier = 0.1f;
-    public float jumpMultiplier = 0.2f;
+    public float damageMultiplier = 1f;
+    public float speedMultiplier = 0.2f;
+    public float jumpMultiplier = 0.4f;
 
     public UpgradeUI _upgradeUI;
 
@@ -33,6 +33,7 @@ public class UpgradeController : MonoBehaviour
         {
             case 0:
                 _statistics.maxHealth = _statistics.maxHealth += healthMultiplier;
+                _statistics.health += healthMultiplier;
                 break;
 
             case 1:
