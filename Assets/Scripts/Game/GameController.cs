@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
             Destroy(transform.gameObject);
         else
         {
+            PlayerController.instance._statistics.health = PlayerController.instance._statistics.maxHealth;
             PlayerController.instance.transform.position = new(-16, -2, 0);
             DialogController.instance.ChangeText();
         }
